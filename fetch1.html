@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset='UTF-8'>
+  <head>
+    <meta charset="UTF-8" />
     <title>Fetch API #01</title>
-    <link rel='stylesheet' href='css/estilo.css'>
-</head>
+    <link rel="stylesheet" href="css/estilo.css" />
+  </head>
 
-<body class="conteudo exercicio">
+  <body class="conteudo exercicio">
     <h1>Estados</h1>
 
     <script>
-        // ...
+      // ====Functions====
+      const criarTextoListItemsEstados = estados =>
+        estados.reduce((html, estado) => html + `<li>${estado.nome}</li>`, '');
+
+      const insertListItemsEstados = textListItemsEstados =>
+        document.body.insertAdjacentHTML(
+          'beforeend',
+          `<ul>${textListItemsEstados}</ul>`
+        );
+      // =================
+
+      const url = 'dados/estados.json';
+
+      fetch(url) //Retorna uma PROMISE
+        .then(resp => resp.json()) //retorna uma PROMISE
+        .then(criarTextoListItemsEstados)
+        .then(insertListItemsEstados)
+        .catch(() => console.log('An error has occurred.'));
     </script>
-</body>
+  </body>
+</html>

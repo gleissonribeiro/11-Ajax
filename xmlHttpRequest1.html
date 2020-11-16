@@ -1,16 +1,78 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset='UTF-8'>
+  <head>
+    <meta charset="UTF-8" />
     <title>XMLHttpRequest #01</title>
-    <link rel='stylesheet' href='css/estilo.css'>
-</head>
+    <link rel="stylesheet" href="css/estilo.css" />
+  </head>
 
-<body class="conteudo exercicio">
+  <body class="conteudo exercicio">
     <h1>Estados</h1>
 
     <script>
-        // ...
+      // ====Cria uma tabela de estados====
+      function criarTabela(estados) {
+        const linhas = estados.map(estado => {
+          // Cria as células com as info dos estados
+          const tdId = document.createElement('td');
+          tdId.innerHTML = estado.id;
+
+          const tdNome = document.createElement('td');
+          tdNome.innerHTML = estado.nome;
+
+          const tdSigla = document.createElement('td');
+          tdSigla.innerHTML = estado.sigla;
+
+          // Adiciona as células à linha de uma tabela
+          const tr = document.createElement('tr');
+          tr.appendChild(tdId);
+          tr.appendChild(tdNome);
+          tr.appendChild(tdSigla);
+
+          return tr;
+        });
+
+        // Adiciona as linha à uma tabela
+        const tabela = document.createElement('table');
+        linhas.forEach(linha => tabela.appendChild(linha));
+
+        // Adiciona a tabela ao 'body'
+        document.body.appendChild(tabela);
+      }
+      // ==================================
+
+      // ----Função AJAX----
+      function ajax(config) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(config.method, config.url, true);
+
+        // EventHandler
+        xhr.onload = e => {
+          if (xhr.status === 200) {
+            config.sucesso(xhr.response);
+          } else if (xhr.status > 400) {
+            config.erro({ code: xhr.status, text: xhr.statusText });
+          }
+        };
+        xhr.send(); //Envia a requisição
+      }
+      // -------------------
+
+      // ****Configuração da requisição AJAX****
+      const config = {
+        method: 'GET',
+        url: 'dados/estados.json',
+        sucesso(response) {
+          criarTabela(JSON.parse(response));
+        },
+        erro(e) {
+          const msg = document.createTextNode(`${e.code}: ${e.text}`);
+          document.body.appendChild(msg);
+        },
+      };
+      // ***************************************
+
+      ajax(config);
     </script>
-</body>
+  </body>
+</html>
