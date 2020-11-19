@@ -31,7 +31,7 @@ app.post('/upload', (req, res) => {
 });
 //-------------------------------
 
-// ====Para upload de arquivos usando a API fetch====
+// ====Para upload de arquivos usando a API 'fetch'====
 app.post('/formulario', (req, res) => {
   res.send({
     ...req.body,
