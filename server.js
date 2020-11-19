@@ -40,5 +40,12 @@ app.post('/formulario', (req, res) => {
 });
 // ==================================================
 
+// ----Outra rota----
+app.get('/parOuImpar', (req, res) => {
+  const numero = parseInt(req.query.numero);
+  res.send({ resultado: numero % 2 === 0 ? 'par' : 'ímpar' });
+});
+// ------------------
+
 // Inicia o servidor
 app.listen(8080, () => console.log('Executando...'));
